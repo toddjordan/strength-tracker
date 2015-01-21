@@ -1,0 +1,73 @@
+<div class="jumbotron">
+  <div class="container">
+    <h2>{{model.selectedExercise.name}}</h2>
+  </div>
+</div>
+<div class="row-spacing row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <button type="button" class="btn btn-default btn-sm" style="float:right;margin-top:-7px;" ng-click="addNewWorkout(model.selectedExercise.workouts)">
+          <span class="glyphicon glyphicon-plus-sign"/>
+        </button>
+        <h3 class="panel-title">Workouts</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Sets</th>
+              <th>1RM</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="value in
+  model.selectedExercise.workouts" ng-click="handleEditToggle(value)" ng-class="{active:isWorkoutSelected(value)}">
+              <td>{{value.date}}</td>
+              <td>{{value.sets.length}}</td>
+              <td>{{value.oneRM}}</td>
+              <td>
+                <button type="button" class="btn btn-default btn-sm" ng-click="removeWorkout(model.selectedExercise.workouts,$index);$event.stopPropagation();">
+                  <span class="glyphicon glyphicon-trash"/>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <button type="button" class="btn btn-default btn-sm" ng-class="{hidden:addSetHidden}" style="float:right;margin-top:-7px;" ng-click="addNewSet(model.selectedWorkout.sets)">
+          <span class="glyphicon glyphicon-plus-sign"/>
+        </button>
+        <h3 class="panel-title">{{model.selectedExercise.name}} - {{model.selectedWorkout.date}}</h3>
+      </div>
+      <div class="panel-body">
+        <ul style="list-style-type:none;">
+          <li ng-repeat="set in model.selectedWorkout.sets">
+            <form class="form-inline">
+              <div class="form-group">
+                <label for="weight">Weight</label>
+                <input ng-model="set.weight" type="text" class="form-control" id="weight" placeholder="Weight in Lbs"/>
+              </div>
+              <div class="form-group">
+                <label for="reps">Reps</label>
+                <input type="text" ng-model="set.reps" class="form-control" id="reps"
+  placeholder="Number of Reps"/>
+              </div>
+              <button type="submit" class="btn btn-default btn-sm"
+  ng-click="removeSet(model.selectedWorkout.sets, $index)">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
