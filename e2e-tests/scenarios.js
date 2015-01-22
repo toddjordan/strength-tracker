@@ -2,23 +2,23 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-describe('my app', function() {
+describe('Strength Tracker', function() {
 
   browser.get('index.html');
 
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    expect(browser.getLocationAbsUrl()).toMatch("/view1");
+  it('should automatically redirect to /workout when location hash/fragment is empty', function() {
+    expect(browser.getLocationAbsUrl()).toMatch("/workout");
   });
 
 
-  describe('view1', function() {
+  describe('workout', function() {
 
     beforeEach(function() {
-      browser.get('index.html#/view1');
+      browser.get('index.html#/workout');
     });
 
 
-    it('should render view1 when user navigates to /view1', function() {
+    it('should render workout when user navigates to /workout', function() {
       expect(element.all(by.css('[ng-view] p')).first().getText()).
         toMatch(/partial for view 1/);
     });

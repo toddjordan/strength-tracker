@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
+  "name": "strength-tracker",
   "private": true,
   "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
+  "description": "A strength tracking application",
+  "repository": "https://github.com/toddjordan/strength-tracker",
   "license": "MIT",
   "devDependencies": {
     "karma": "~0.10",

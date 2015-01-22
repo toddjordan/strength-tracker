@@ -29,7 +29,7 @@ exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', functio
   sc.isWorkoutSelected = function(workout) {
     return workout == sc.model.selectedWorkout;
   };
-
+  
   sc.removeWorkout = function(workouts, index) {
     workouts.splice(index, 1);
   };
