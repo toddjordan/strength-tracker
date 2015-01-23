@@ -14,6 +14,9 @@ factory('WorkoutService', function(){
   var workoutService = new WorkoutService();
   workoutService.fetchData();
   return workoutService;
+}).
+factory('OneRepMaxService', function() {
+  return new OneRepMaxService();
 });
 
 
