@@ -4,7 +4,6 @@
 angular.module('strengthTracker', [
   'ngRoute',
   'strengthTracker.workout',
-  'strengthTracker.view2',
   'strengthTracker.version',
   'strengthTracker.exerciseSelection'
 ]).
