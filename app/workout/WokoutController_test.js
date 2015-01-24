@@ -17,6 +17,12 @@ describe('Strength Tracker Workout Module', function() {
   var workoutService = {
     clearSelectedWorkout:function(){}
   };
+
+  var oneRepMaxService = {
+    calculate: function(weight, reps) {
+      return 200;
+    }
+  };
   
   var workoutController, scope;
 
@@ -25,6 +31,7 @@ describe('Strength Tracker Workout Module', function() {
     module("strengthTracker.workout");
     module(function($provide){
       $provide.value("WorkoutService", workoutService);
+      $provide.value("OneRepMaxService", oneRepMaxService);
     } );  
   });
 
@@ -33,7 +40,7 @@ describe('Strength Tracker Workout Module', function() {
 
     scope = $rootScope.$new();
     workoutController = function() {
-      return $controller('WorkoutController', {'$scope':scope, 'WorkoutService':workoutService});
+      return $controller('WorkoutController', {'$scope':scope, 'WorkoutService':workoutService, 'OneRepMaxService':oneRepMaxService});
     };
   }));
 
@@ -147,4 +154,24 @@ describe('Strength Tracker Workout Module', function() {
       expect(sets[2]).toEqual({});
     }));
   });
+
+  describe('Updating 1RM when set changes', function() {
+    
+    it('should set 1RM to set if its greater than current', inject(function() {
+      workoutController();
+      var set = {weight:200, reps:1};
+      var exercise = {oneRM:100};
+      scope.onSetChange(set, exercise);
+      expect(exercise.oneRM).toBe(200);
+    }));
+
+    it('should not set 1RM to set if its less than current', inject(function() {
+      workoutController();
+      var set = {weight:200, reps:1};
+      var exercise = {oneRM:300};
+      scope.onSetChange(set, exercise);
+      expect(exercise.oneRM).toBe(300);
+    }));
+  });
+  
 });

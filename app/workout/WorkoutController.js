@@ -9,7 +9,7 @@ exerciseApp.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', function(sc, workoutService) {
+exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRepMaxService', function(sc, workoutService, oneRepMaxService) {
   sc.model = workoutService;
   sc.addSetHidden=true;
 
@@ -51,6 +51,13 @@ exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', functio
   sc.removeSet = function(sets, index) {
     //remove given set from model
     sets.splice(index,1);
+  };
+
+  sc.onSetChange = function(set, exercise) {
+    set.oneRM = oneRepMaxService.calculate(set.weight, set.reps);
+    if(set.oneRM > exercise.oneRM) {
+      exercise.oneRM = set.oneRM;
+    }
   };
 
 }]);

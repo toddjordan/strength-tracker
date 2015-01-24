@@ -53,12 +53,13 @@
             <form class="form-inline">
               <div class="form-group">
                 <label for="weight">Weight</label>
-                <input ng-model="set.weight" type="text" class="form-control" id="weight" placeholder="Weight in Lbs"/>
+                <input ng-model="set.weight" type="text" class="form-control" 
+                       id="weight" placeholder="Weight in Lbs" ng-change="onSetChange(set, model.selectedWorkout)"/>
               </div>
               <div class="form-group">
                 <label for="reps">Reps</label>
-                <input type="text" ng-model="set.reps" class="form-control" id="reps"
-  placeholder="Number of Reps"/>
+                <input type="text" ng-model="set.reps" class="form-control" 
+                       id="reps" placeholder="Number of Reps" ng-change="onSetChange(set, model.selectedWorkout)"/>
               </div>
               <button type="submit" class="btn btn-default btn-sm"
   ng-click="removeSet(model.selectedWorkout.sets, $index)">

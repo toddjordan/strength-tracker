@@ -19,7 +19,7 @@ function WorkoutService() {
           {
             exercise:"Bench Press",
             date:"1/2/2015",
-            oneRM:250,
+            oneRM:0,
             sets:[
               {
 	        weight:200,
