@@ -41,6 +41,7 @@ exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRep
     workouts.unshift(newWorkout);
     var now = new Date();
     workouts[0].date=now.getMonth()+1 +"/"+now.getDate()+"/"+now.getFullYear();
+    workouts[0].oneRM=0;
   };
 
   sc.addNewSet = function(sets) {
