@@ -63,16 +63,16 @@ app/                    --> all of the source files for the application
       version-directive_test.js  --> version directive tests
       interpolate-filter.js      --> custom interpolation filter
       interpolate-filter_test.js --> interpolate filter tests
-  exerciseSelection/      --> logic for listing selecting exercises
-    exerciseSelection.js
+  exercise/      --> logic for listing selecting exercises
+    ExerciseSelectionController.js
   workout/                --> the main workout view template and logic
     workout.html            --> the partial template
-    workout.js              --> the controller logic
-    workout_test.js         --> tests of the controller
-  view2/                --> the view2 view template and logic
-    view2.html            --> the partial template
-    view2.js              --> the controller logic
-    view2_test.js         --> tests of the controller
+    WorkoutController.js              --> the controller logic
+    WorkoutController_test.js         --> tests of the controller
+  services/                --> the view2 view template and logic
+    WorkoutService.js            --> Fetches/Provides the workout model
+    WorkoutService_test.js        -->tests for the WorkoutService
+    OneRepMaxService.js              --> Calculates 1RM
   app.js                --> main application module
   index.html            --> app layout file (the main html template file of the app)
   index-async.html      --> just like index.html, but loads js files asynchronously
