@@ -5,7 +5,8 @@ angular.module('strengthTracker', [
   'ngRoute',
   'strengthTracker.workout',
   'strengthTracker.version',
-  'strengthTracker.exerciseSelection'
+  'strengthTracker.exerciseSelection',
+  'angular-chartist'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/workout'});
@@ -17,6 +18,9 @@ factory('WorkoutService', function(){
 }).
 factory('OneRepMaxService', function() {
   return new OneRepMaxService();
+}).
+factory('ChartService', function() {
+  return new ChartService();
 });
 
 

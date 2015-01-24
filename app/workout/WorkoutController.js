@@ -9,9 +9,10 @@ exerciseApp.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRepMaxService', function(sc, workoutService, oneRepMaxService) {
+exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRepMaxService', 'ChartService', function(sc, workoutService, oneRepMaxService, chartService) {
   sc.model = workoutService;
   sc.addSetHidden=true;
+  sc.oneRMChartData = chartService.getOneRMChartData();
 
   sc.handleEditToggle = function(workout) {
     if (sc.model.selectedWorkout === workout) {
@@ -59,6 +60,7 @@ exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRep
     if(set.oneRM > exercise.oneRM) {
       exercise.oneRM = set.oneRM;
     }
+    sc.oneRMChartData = chartService.getOneRMChartData();
   };
 
 }]);

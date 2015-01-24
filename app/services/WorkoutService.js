@@ -6,7 +6,7 @@ function WorkoutService() {
   this.selectedWorkout = nullWorkout;
   this.exercises = {};
   this.selectedExercise = {};
-
+  this.selectedExercise.workouts = [];
   this.clearSelectedWorkout = function() {
     this.selectedWorkout = nullWorkout;
   };

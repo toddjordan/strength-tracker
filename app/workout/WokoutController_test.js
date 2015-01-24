@@ -23,6 +23,15 @@ describe('Strength Tracker Workout Module', function() {
       return 200;
     }
   };
+
+  var chartService = {
+    getOneRMChartData: function() {
+      return {
+        series: [1,2,3,4],
+        labels: ["a","b","c","d"]
+      };
+    }
+  };
   
   var workoutController, scope;
 
@@ -32,6 +41,7 @@ describe('Strength Tracker Workout Module', function() {
     module(function($provide){
       $provide.value("WorkoutService", workoutService);
       $provide.value("OneRepMaxService", oneRepMaxService);
+      $provide.value("ChartService", chartService);
     } );  
   });
 
@@ -40,7 +50,7 @@ describe('Strength Tracker Workout Module', function() {
 
     scope = $rootScope.$new();
     workoutController = function() {
-      return $controller('WorkoutController', {'$scope':scope, 'WorkoutService':workoutService, 'OneRepMaxService':oneRepMaxService});
+      return $controller('WorkoutController', {'$scope':scope, 'WorkoutService':workoutService, 'OneRepMaxService':oneRepMaxService, 'ChartService': chartService});
     };
   }));
 
@@ -171,6 +181,15 @@ describe('Strength Tracker Workout Module', function() {
       var exercise = {oneRM:300};
       scope.onSetChange(set, exercise);
       expect(exercise.oneRM).toBe(300);
+    }));
+    
+    it('should update chart data', inject(function() {
+      workoutController();
+      var set = {weight:200, reps:1};
+      var exercise = {oneRM:300};
+      chartService.getOneRMChartData = jasmine.createSpy("getOneRMChartData spy");
+      scope.onSetChange(set, exercise);
+      expect(chartService.getOneRMChartData).toHaveBeenCalled();
     }));
   });
   
