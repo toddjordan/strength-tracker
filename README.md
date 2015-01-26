@@ -73,6 +73,7 @@ app/                    --> all of the source files for the application
     WorkoutService.js            --> Fetches/Provides the workout model
     WorkoutService_test.js        -->tests for the WorkoutService
     OneRepMaxService.js              --> Calculates 1RM
+    ChartService.js                  --> Configures a chart-friendly object from given workout data
   app.js                --> main application module
   index.html            --> app layout file (the main html template file of the app)
   index-async.html      --> just like index.html, but loads js files asynchronously
@@ -198,26 +199,6 @@ webserver during development to avoid issues with security restrictions (sandbox
 sandbox implementation varies between browsers, but quite often prevents things like cookies, xhr,
 etc to function properly when an html page is opened via `file://` scheme instead of `http://`.
 
-
-### Running the App during Development
-
-The angular-seed project comes preconfigured with a local development webserver.  It is a node.js
-tool called [http-server][http-server].  You can start this webserver with `npm start` but you may choose to
-install the tool globally:
-
-```
-sudo npm install -g http-server
-```
-
-Then you can start your own development web server to serve static files from a folder by
-running:
-
-```
-http-server -a localhost -p 8000
-```
-
-Alternatively, you can choose to configure your own webserver, such as apache or nginx. Just
-configure your server to serve the files under the `app/` directory.
 
 
 ### Running the App in Production
