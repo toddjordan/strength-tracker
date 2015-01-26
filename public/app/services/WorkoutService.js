@@ -1,8 +1,8 @@
-function WorkoutService() {
+function WorkoutService(http) {
   var nullWorkout = {
     date:"Select a Workout"
   };
-
+  this.http = http;
   this.selectedWorkout = nullWorkout;
   this.exercises = {};
   this.selectedExercise = {};
@@ -11,41 +11,25 @@ function WorkoutService() {
     this.selectedWorkout = nullWorkout;
   };
 
-  this.fetchData = function() {
-    this.exercises =  {
-    "Bench Press": { 
-        name: "Bench Press",
-        workouts : [
-          {
-            exercise:"Bench Press",
-            date:"1/2/2015",
-            oneRM:0,
-            sets:[
-              {
-	        weight:200,
-	        reps:8
-              },
-              {
-	        weight:200,
-	        reps:8
-              }
-            ]
-          }
-        ]
-      },
-    "Military Press": { 
-        name: "Military Press"
+  this.fetchData = function(success) {
+    var serviceObj = this;
+    var selectARandomExercise = function(exercises) {
+      var exercise;
+      for (i in exercises) {
+        exercise = exercises[i];
+        break;
       }
+      return exercise;
     };
-    this.selectedExercise = selectARandomExercise(this.exercises);
+    http.get('/exercises').success(function(data, status, headers, config) {
+      serviceObj.exercises = data;
+      serviceObj.selectedExercise = selectARandomExercise(serviceObj.exercises);
+      success();
+    }).error(function(data, status, headers, config) {
+
+    });
+
   };
   
-  var selectARandomExercise = function(exercises) {
-    var exercise;
-    for (i in exercises) {
-      exercise = exercises[i];
-      break;
-    }
-    return exercise;
-  };
+
 }

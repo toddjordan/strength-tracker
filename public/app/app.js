@@ -11,11 +11,10 @@ angular.module('strengthTracker', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/workout'});
 }]).
-factory('WorkoutService', function(){
-  var workoutService = new WorkoutService();
-  workoutService.fetchData();
-  return workoutService;
-}).
+  factory('WorkoutService',  function($http){
+    var workoutService = new WorkoutService($http);
+    return workoutService;
+  }).
 factory('OneRepMaxService', function() {
   return new OneRepMaxService();
 }).
