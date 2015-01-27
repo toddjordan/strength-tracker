@@ -1,6 +1,7 @@
 {
   "name": "strength-tracker",
   "description": "A strength tracking app",
+  "directory":"public/app/",
   "version": "0.0.0",
   "homepage": "https://github.com/toddjordan/strength-tracker",
   "license": "MIT",
