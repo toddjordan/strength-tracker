@@ -1,35 +1,18 @@
 function WorkoutService(http) {
-  var nullWorkout = {
-    date:"Select a Workout"
-  };
-  this.http = http;
-  this.selectedWorkout = nullWorkout;
-  this.exercises = {};
-  this.selectedExercise = {};
-  this.selectedExercise.workouts = [];
-  this.clearSelectedWorkout = function() {
-    this.selectedWorkout = nullWorkout;
-  };
 
-  this.fetchData = function(success) {
-    var serviceObj = this;
-    var selectARandomExercise = function(exercises) {
-      var exercise;
-      for (i in exercises) {
-        exercise = exercises[i];
-        break;
-      }
-      return exercise;
-    };
+  this.http = http;
+  this.exercises = {};
+  var serviceObj = this;
+
+  this.fetchData = function(success, selectionModel) {
     http.get('/exercises').success(function(data, status, headers, config) {
       serviceObj.exercises = data;
-      serviceObj.selectedExercise = selectARandomExercise(serviceObj.exercises);
+      selectionModel.selectedExercise = selectionModel.selectARandomExercise(serviceObj.exercises);
       success();
     }).error(function(data, status, headers, config) {
 
     });
 
   };
-  
 
 }

@@ -1,6 +1,6 @@
 <div class="jumbotron">
   <div class="container">
-    <h2>{{model.selectedExercise.name}}</h2>
+    <h2>{{selectionModel.selectedExercise.name}}</h2>
     <chartist class="ct-chart" chartist-data="oneRMChartData" chartist-chart-type="Line"></chartist>
   </div>
 </div>
@@ -8,7 +8,7 @@
   <div class="col-md-6">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <button type="button" class="btn btn-default btn-sm" style="float:right;margin-top:-7px;" ng-click="addNewWorkout(model.selectedExercise.workouts)">
+        <button type="button" class="btn btn-default btn-sm" style="float:right;margin-top:-7px;" ng-click="addNewWorkout(selectionModel.selectedExercise.workouts)">
           <span class="glyphicon glyphicon-plus-sign"/>
         </button>
         <h3 class="panel-title">Workouts</h3>
@@ -25,12 +25,12 @@
           </thead>
           <tbody>
             <tr ng-repeat="value in
-  model.selectedExercise.workouts" ng-click="handleEditToggle(value)" ng-class="{active:isWorkoutSelected(value)}">
+  selectionModel.selectedExercise.workouts" ng-click="handleEditToggle(value)" ng-class="{active:isWorkoutSelected(value)}">
               <td>{{value.date}}</td>
               <td>{{value.sets.length}}</td>
               <td>{{value.oneRM}}</td>
               <td>
-                <button type="button" class="btn btn-default btn-sm" ng-click="removeWorkout(model.selectedExercise.workouts,$index);$event.stopPropagation();">
+                <button type="button" class="btn btn-default btn-sm" ng-click="removeWorkout(selectionModel.selectedExercise.workouts,$index);$event.stopPropagation();">
                   <span class="glyphicon glyphicon-trash"/>
                 </button>
               </td>
@@ -43,27 +43,26 @@
   <div class="col-md-6">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <button type="button" class="btn btn-default btn-sm" ng-class="{hidden:addSetHidden}" style="float:right;margin-top:-7px;" ng-click="addNewSet(model.selectedWorkout.sets)">
+        <button type="button" class="btn btn-default btn-sm" ng-class="{hidden:addSetHidden}" style="float:right;margin-top:-7px;" ng-click="addNewSet(selectionModel.selectedWorkout.sets)">
           <span class="glyphicon glyphicon-plus-sign"/>
         </button>
-        <h3 class="panel-title">{{model.selectedExercise.name}} - {{model.selectedWorkout.date}}</h3>
+        <h3 class="panel-title">{{selectionModel.selectedExercise.name}} - {{model.selectedWorkout.date}}</h3>
       </div>
       <div class="panel-body">
         <ul style="list-style-type:none;">
-          <li ng-repeat="set in model.selectedWorkout.sets">
+          <li ng-repeat="set in selectionModel.selectedWorkout.sets">
             <form class="form-inline">
               <div class="form-group">
                 <label for="weight">Weight</label>
                 <input ng-model="set.weight" type="text" class="form-control" 
-                       id="weight" placeholder="Weight in Lbs" ng-change="onSetChange(set, model.selectedWorkout)"/>
+                       id="weight" placeholder="Weight in Lbs" ng-change="onSetChange(set, selectionModel.selectedWorkout)"/>
               </div>
               <div class="form-group">
                 <label for="reps">Reps</label>
                 <input type="text" ng-model="set.reps" class="form-control" 
-                       id="reps" placeholder="Number of Reps" ng-change="onSetChange(set, model.selectedWorkout)"/>
+                       id="reps" placeholder="Number of Reps" ng-change="onSetChange(set, selectionModel.selectedWorkout)"/>
               </div>
-              <button type="submit" class="btn btn-default btn-sm"
-  ng-click="removeSet(model.selectedWorkout.sets, $index)">
+              <button type="submit" class="btn btn-default btn-sm" ng-click="removeSet(selectionModel.selectedWorkout.sets, $index)">
                 <span class="glyphicon glyphicon-trash"></span>
               </button>
             </form>

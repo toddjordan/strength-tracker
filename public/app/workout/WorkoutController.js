@@ -9,18 +9,19 @@ exerciseApp.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRepMaxService', 'ChartService', function(sc, workoutService, oneRepMaxService, chartService) {
+exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRepMaxService', 'ChartService', 'SelectionService', function(sc, workoutService, oneRepMaxService, chartService, selectionService) {
   sc.model = workoutService;
+  sc.selectionModel = selectionService;
   sc.addSetHidden=true;
   sc.oneRMChartData = chartService.getOneRMChartData();
 
   sc.handleEditToggle = function(workout) {
-    if (sc.model.selectedWorkout === workout) {
-      workoutService.clearSelectedWorkout();
+    if (sc.selectionModel.selectedWorkout === workout) {
+      selectionService.clearSelectedWorkout();
       //hide add set button
       sc.addSetHidden=true;
     } else {
-      sc.model.selectedWorkout = workout;
+      sc.selectionModel.selectedWorkout = workout;
       //show add set button
       sc.addSetHidden=false;
     }
@@ -28,7 +29,7 @@ exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRep
   };
 
   sc.isWorkoutSelected = function(workout) {
-    return workout == sc.model.selectedWorkout;
+    return workout == sc.selectionModel.selectedWorkout;
   };
   
   sc.removeWorkout = function(workouts, index) {

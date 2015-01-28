@@ -14,8 +14,12 @@
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+  <script
+    src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+
 </head>
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -29,12 +33,26 @@
         <a class="navbar-brand" href="#">Strength Tracker</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-
         <form class="nav navbar-form navbar-left" ng-controller="ExerciseSelectionController">
+          <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+              <h3 class="modal-title">Create an Exercise</h3>
+            </div>
+            <div class="modal-body">
+              <form>
+                <label for="exerciseName">Exercise Name</label>
+                <input type="text" class="form-control" id="exerciseName" placeholder="Exercise name"
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" ng-click="ok()">OK</button>
+              <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+            </div>
+          </script>
           <div class="form-group">
-            <select class="form-control" ng-options="name for
-          (name,value) in items" ng-model="selectedItem">
+            <select class="form-control" ng-options="name for (name,value) in items" ng-model="selectedItem">
             </select>
+            <button type="button" class="btn btn-default" ng-click="launchAddModal()"><span class="glyphicon glyphicon-plus-sign"></span></button>
           </div>          
         </form>
       </div>
@@ -55,15 +73,16 @@
   -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>  
   <script src="bower_components/angular/angular.js"></script>
-  <script
-  src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
   <script src="bower_components/chartist/dist/chartist.min.js"></script>
-  <script src="bower_components/angular-chartist.js/dist/angular-chartist.min.js"></script>
+  <script src="bower_components/angular-chartist.js/dist/angular-chartist.min.js"></script>  
   <script src="app.js"></script>
   <script src="workout/WorkoutController.js"></script>
   <script src="services/WorkoutService.js"></script>
+  <script src="services/SelectionService.js"></script>
   <script src="services/OneRepMaxService.js"></script>
   <script src="services/ChartService.js"></script>
   <script src="exercise/ExerciseSelectionController.js"></script>

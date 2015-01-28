@@ -15,6 +15,10 @@ describe('Strength Tracker Workout Module', function() {
   };
 
   var workoutService = {
+
+  };
+
+  var selectionService = {
     clearSelectedWorkout:function(){}
   };
 
@@ -50,7 +54,7 @@ describe('Strength Tracker Workout Module', function() {
 
     scope = $rootScope.$new();
     workoutController = function() {
-      return $controller('WorkoutController', {'$scope':scope, 'WorkoutService':workoutService, 'OneRepMaxService':oneRepMaxService, 'ChartService': chartService});
+      return $controller('WorkoutController', {'$scope':scope, 'WorkoutService':workoutService, 'OneRepMaxService':oneRepMaxService, 'ChartService': chartService, 'SelectionService': selectionService});
     };
   }));
 
@@ -75,23 +79,23 @@ describe('Strength Tracker Workout Module', function() {
     it('should show the add set button for a new selection', function() {
       
       workoutController();
-      scope.model.selectedWorkout = workout1;
+      scope.selectionModel.selectedWorkout = workout1;
       scope.handleEditToggle(workout2);
       expect(scope.addSetHidden).toBe(false);
     });
 
     it('should clear selected workout for the same selection', inject(function() {
-      spyOn(workoutService, 'clearSelectedWorkout');
+      spyOn(selectionService, 'clearSelectedWorkout');
       workoutController();
-      scope.model.selectedWorkout = workout1;
+      scope.selectionModel.selectedWorkout = workout1;
       scope.handleEditToggle(workout1);
-      expect(workoutService.clearSelectedWorkout).toHaveBeenCalled();
+      expect(selectionService.clearSelectedWorkout).toHaveBeenCalled();
 
     }));
 
     it('should hide add set button for the same selection', inject(function() {
       workoutController();
-      scope.model.selectedWorkout = workout1;
+      scope.selectionModel.selectedWorkout = workout1;
       scope.handleEditToggle(workout1);
       expect(scope.addSetHidden).toBe(true);
      }));
