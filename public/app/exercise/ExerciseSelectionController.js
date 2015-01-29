@@ -16,11 +16,7 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope','$modal','
       controller: 'AddExerciseController',
       size: 'sm'
     });
-    modalInstance.result.then(function() {
-      //chosen
-    }, function() {
-      //dismissed
-    });
+
   };
 
   //watch for when a new item is selected to update the rest of the screen
@@ -33,7 +29,9 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope','$modal','
 
 exerciseSelection.controller('AddExerciseController', ['$scope', '$modalInstance', function(sc, modalInstance) {
   sc.add = function() {
-    modalInstance.close({});
+    var newExercise = {};
+    newExercise.exerciseName = sc.exerciseName;
+    modalInstance.close(newExercise);
   };
 
   sc.cancel = function() {
