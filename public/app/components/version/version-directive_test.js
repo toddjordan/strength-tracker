@@ -1,9 +1,9 @@
 'use strict';
 
-describe('strengthTracker.version module', function() {
+describe('In the version module,', function() {
   beforeEach(module('strengthTracker.version'));
 
-  describe('app-version directive', function() {
+  describe('the app-version directive', function() {
     it('should print current version', function() {
       module(function($provide) {
         $provide.value('version', 'TEST_VER');

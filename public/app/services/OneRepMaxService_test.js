@@ -1,13 +1,13 @@
 'use strict';
 
-describe('One Rep Max Service', function() {
+describe('In the one rep max service,', function() {
   var oneRepMaxService;
 
   beforeEach(function() {
     oneRepMaxService = new OneRepMaxService();
   });
 
-  describe('Calculating One Rep Max for Epley Formula', function() {
+  describe('calculating one rep max according to the Epley formula', function() {
 
     it('should return same weight for one rep', function() {
       var oneRM = oneRepMaxService.calculate(200, 1);

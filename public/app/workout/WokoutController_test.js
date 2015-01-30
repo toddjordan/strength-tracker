@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Strength Tracker Workout Module', function() {
+describe('In the workout module,', function() {
 
   var workout1 = {
     date:"1/1/2111",
@@ -58,7 +58,7 @@ describe('Strength Tracker Workout Module', function() {
     };
   }));
 
-  describe('WorkoutController', function(){
+  describe('the workout controller', function(){
     var controller;
     beforeEach(function() {
       controller = workoutController();
@@ -68,15 +68,15 @@ describe('Strength Tracker Workout Module', function() {
       expect(controller).toBeDefined();
     }));
 
-    it('should hide add set button by default', inject(function($controller) {
+    it('should hide the \"add set\" button by default', inject(function($controller) {
       expect(scope.addSetHidden).toBe(true);
     }));
   });
 
-  describe('Toggling a workout', function() {
+  describe('selecting a workout', function() {
 
 
-    it('should show the add set button for a new selection', function() {
+    it('should display the \"add set\" button for a new selection', function() {
       
       workoutController();
       scope.selectionModel.selectedWorkout = workout1;
@@ -93,7 +93,7 @@ describe('Strength Tracker Workout Module', function() {
 
     }));
 
-    it('should hide add set button for the same selection', inject(function() {
+    it('should hide the \"add set\" button for the same selection', inject(function() {
       workoutController();
       scope.selectionModel.selectedWorkout = workout1;
       scope.handleEditToggle(workout1);
@@ -102,13 +102,13 @@ describe('Strength Tracker Workout Module', function() {
 
   });
   
-  describe('Removing a workout', function() {
+  describe('clicking remove workout', function() {
     var workouts;
     beforeEach(function(){
       workouts = [workout1, workout2];      
     });
 
-    it('should remove workout at given index', inject(function() {
+    it('should remove the workout at the given index', inject(function() {
       workoutController();
       scope.removeWorkout(workouts, 0);
       expect(workouts.length).toBe(1);
@@ -119,13 +119,13 @@ describe('Strength Tracker Workout Module', function() {
 
   });
 
-  describe('Adding a workout', function() {
+  describe('clicking add workout', function() {
     var workouts;
     beforeEach(function(){
       workouts = [workout1, workout2];      
     });
 
-    it('should add  workout to first item in array', inject(function() {
+    it('should add a new workout to the first item', inject(function() {
       workoutController();
       scope.addNewWorkout(workouts);
       expect(workouts.length).toBe(3);
@@ -141,13 +141,13 @@ describe('Strength Tracker Workout Module', function() {
 
   });
 
-  describe('Removing a set', function() {
+  describe('clicking remove set', function() {
     var sets;
     beforeEach(function(){
       sets=[{weight:400, reps:4},{weight:200,reps:8}];
     });
 
-    it('should remove set at the given index', inject(function() {
+    it('should remove the set at the given index', inject(function() {
       workoutController();
       scope.removeSet(sets, 0);
       expect(sets.length).toBe(1);
@@ -169,9 +169,9 @@ describe('Strength Tracker Workout Module', function() {
     }));
   });
 
-  describe('Updating 1RM when set changes', function() {
+  describe('changing set data', function() {
     
-    it('should set 1RM to set if its greater than current', inject(function() {
+    it('should set the 1RM if its greater than current', inject(function() {
       workoutController();
       var set = {weight:200, reps:1};
       var exercise = {oneRM:100};

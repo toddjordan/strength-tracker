@@ -16,6 +16,9 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope','$modal','
       controller: 'AddExerciseController',
       size: 'sm'
     });
+    modalInstance.result.then(function(exerciseName) {
+      workoutService.createNewExercise(exerciseName);
+    });
 
   };
 
@@ -28,10 +31,8 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope','$modal','
 }]);
 
 exerciseSelection.controller('AddExerciseController', ['$scope', '$modalInstance', function(sc, modalInstance) {
-  sc.add = function() {
-    var newExercise = {};
-    newExercise.exerciseName = sc.exerciseName;
-    modalInstance.close(newExercise);
+  sc.ok = function() {
+    modalInstance.close(sc.exerciseName);
   };
 
   sc.cancel = function() {

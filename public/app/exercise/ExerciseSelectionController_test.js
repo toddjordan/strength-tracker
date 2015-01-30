@@ -1,6 +1,6 @@
 'use strict';
 
-describe('strengthTracker exercise selection  module', function() {
+describe('In the exercise selection module,', function() {
 
   var workoutService = {
     fetchData:function(success,selectionModel){},
@@ -12,9 +12,15 @@ describe('strengthTracker exercise selection  module', function() {
   };
 
   var selectionService = {
+    clearSelectedWorkout:function(){}
   };
 
   var modalInstance = {
+    result:{
+      then:function(doFun) {
+      }
+    }
+           
   };
 
   var modal = {
@@ -40,7 +46,7 @@ describe('strengthTracker exercise selection  module', function() {
     scope.vm = exerciseSelectionController;
   }));
 
-  describe('ExerciseSelectionController', function() {
+  describe('controller execution', function() {
 
     it('should fetch exercise data', function(){
       spyOn(workoutService, 'fetchData');
@@ -56,13 +62,12 @@ describe('strengthTracker exercise selection  module', function() {
 
   });
 
-  describe('Successful Fetching of Data', function() {
+  describe('upon successfully fetching data', function() {
     var exercises = ["workout1", "workout2"];
     var selectedExercise = "workout2";
     selectionService.selectedExercise = selectedExercise;
 
     beforeEach(function() {
-      scope.launchAddModal = function(){};
       workoutService.exercises = exercises;
       spyOn(workoutService, 'fetchData');
       exerciseSelectionController();
@@ -78,16 +83,20 @@ describe('strengthTracker exercise selection  module', function() {
     });
   });
 
-  describe('Launching Create Exercise Modal', function() {
+  describe('clicking to add an exercese', function() {
     it ('should open modal', function() {
-
+      spyOn(modal, 'open').andReturn(modalInstance);
+      exerciseSelectionController();
+      scope.launchAddModal();
+      expect(modal.open).toHaveBeenCalled();
     });
 
   });
 
-  describe('Create Exercise Modal Submit', function(){
-    it ('should save the exercise', function() {
+  describe('submitting the new exercise dialog', function(){
+    it ('should request creation of the new exercise', function() {
       spyOn(workoutService, 'createExercise');
+      spyOn(modal, 'open').andReturn(modalInstance);
       exerciseSelectionController();
       scope.launchAddModal();
     });
@@ -95,18 +104,27 @@ describe('strengthTracker exercise selection  module', function() {
 
 
   
-  describe('A selection change', function() {
-    
-    it ('should set the selected exercise', function() {
-
+  describe('changing the exercise selection', function() {
+    var exercise = {
+      date:"1/30/2015"
+    };
+    beforeEach(function() {
+      spyOn(selectionService, 'clearSelectedWorkout');
+      spyOn(chartService, 'applyNewExercise');
+      exerciseSelectionController();
+      scope.selectedItem = exercise;
+      scope.$digest();
+    });
+    it ('should set the selected exercise on the model', function() {
+      expect(selectionService.selectedExercise).toBe(exercise);
     });
 
     it('should clear the selected workout', function() {
-    
+      expect(selectionService.clearSelectedWorkout).toHaveBeenCalled();
     });
 
     it('should update the chart for the new exercise', function() {
-
+      expect(chartService.applyNewExercise).toHaveBeenCalled();
     });
   });
 

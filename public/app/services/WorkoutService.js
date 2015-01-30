@@ -15,4 +15,11 @@ function WorkoutService(http) {
 
   };
 
+  this.createNewExercise = function(exerciseName) {
+    newExercise = {};
+    newExercise.name = exerciseName;
+    newExercise.workouts = [];
+    this.exercises[exerciseName] = newExercise;
+  };
+
 }
