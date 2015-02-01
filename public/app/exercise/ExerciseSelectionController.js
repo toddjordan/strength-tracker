@@ -17,9 +17,24 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope','$modal','
       size: 'sm'
     });
     modalInstance.result.then(function(exerciseName) {
-      workoutService.createNewExercise(exerciseName);
+      workoutService.createNewExercise(exerciseName, selectionModel, function() {
+        sc.selectedItem = selectionModel.selectedExercise;
+      });
     });
 
+  };
+
+  sc.removeExercise = function() {
+    var modalInstance = modal.open({ 
+      templateUrl:"removeWarning.html",
+      controller: 'RemoveExerciseController',
+      size : 'sm'
+    });
+    modalInstance.result.then(function() {
+      workoutService.removeExercise(selectionModel, function() {
+        sc.selectedItem = selectionModel.selectedExercise;
+      });
+    });
   };
 
   //watch for when a new item is selected to update the rest of the screen
@@ -36,6 +51,16 @@ exerciseSelection.controller('AddExerciseController', ['$scope', '$modalInstance
   };
 
   sc.cancel = function() {
+    modalInstance.dismiss('cancel');
+  };
+}]);
+
+exerciseSelection.controller('RemoveExerciseController', ['$scope', '$modalInstance', function(sc, modalInstance) {
+  sc.remove = function() {
+    modalInstance.close();
+  };
+
+  sc.cancelRemove = function() {
     modalInstance.dismiss('cancel');
   };
 }]);

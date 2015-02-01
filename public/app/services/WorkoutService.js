@@ -6,20 +6,38 @@ function WorkoutService(http) {
 
   this.fetchData = function(success, selectionModel) {
     http.get('/exercises').success(function(data, status, headers, config) {
-      serviceObj.exercises = data;
+      serviceObj.exercises = data.exercises;
       selectionModel.selectedExercise = selectionModel.selectARandomExercise(serviceObj.exercises);
       success();
     }).error(function(data, status, headers, config) {
 
     });
-
   };
 
-  this.createNewExercise = function(exerciseName) {
+  this.createNewExercise = function(exerciseName, selectionModel, success) {
     newExercise = {};
     newExercise.name = exerciseName;
-    newExercise.workouts = [];
-    this.exercises[exerciseName] = newExercise;
+    newExercise['workouts'] = [];
+    http.post('/exercises', {exercise:newExercise}).success(function(data, status, headers, config) {
+      serviceObj.exercises[exerciseName] = data;
+      selectionModel.selectedExercise = data;
+      selectionModel.clearSelectedWorkout();
+      success();
+    }).error(function(data, status, headers, config) {
+      
+    });
+  };
+
+  this.removeExercise = function(selectionModel, success) {
+    var exercise = selectionModel.selectedExercise;
+    var exerciseName = exercise.name;
+    var id = exercise['_id'];
+    http['delete']('/exercises/'+id).success(function(data, status, headers, config) {
+      selectionModel.clearSelectedWorkout();
+      delete serviceObj.exercises[exerciseName];
+      selectionModel.selectARandomExercise(serviceObj.exercises);
+      success();
+    });
   };
 
 }

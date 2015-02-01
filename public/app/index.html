@@ -50,10 +50,28 @@
               <button class="btn btn-default" ng-click="cancel()">Cancel</button>
             </div>
           </script>
+          <script type="text/ng-template" id="removeWarning.html">
+            <div class="modal-header">
+              <h3 class="modal-title">Delete Exercise</h3>
+            </div>
+            <div class="modal-body">
+              <p>If you delete, all workout data associated with the
+                exercise will be removed, never to return.  Are you sure?</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-warning"
+                      ng-click="remove()">Delete</button>
+              <button class="btn btn-default" ng-click="cancelRemove()">Cancel</button>
+            </div>
+          </script>
           <div class="form-group">
             <select class="form-control" ng-options="name for (name,value) in items" ng-model="selectedItem">
             </select>
-            <button type="button" class="btn btn-default" ng-click="launchAddModal()"><span class="glyphicon glyphicon-plus-sign"></span></button>
+            <button type="button" class="btn btn-default"
+                    ng-click="launchAddModal()"><span class="glyphicon
+                                                      glyphicon-plus-sign"></span></button>
+            <button type="button" class="btn btn-default"
+                    ng-click="removeExercise()"><span class="glyphicon glyphicon-minus-sign"></span></button>
           </div>          
         </form>
       </div>

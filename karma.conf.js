@@ -27,7 +27,7 @@ module.exports = function(config){
       'karma-html-reporter'
             ],
 
-    reporters: ['progess', 'html'],
+    reporters: ['progress', 'html'],
 
     junitReporter : {
       outputFile: 'test_out/unit.xml',

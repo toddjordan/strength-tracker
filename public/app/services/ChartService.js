@@ -1,11 +1,19 @@
 
 function ChartService() {
 
+  this.data = {};
+
   this.applyNewExercise = function(exercise) {
     this.exercise = exercise;
+    this.updateOneRMChartData();
   };
 
   this.getOneRMChartData = function() {
+    this.updateOneRMChartData();
+    return this.data;
+  };
+
+  this.updateOneRMChartData = function() {
     var dates = [];
     var oneRMs = [];
     if (typeof this.exercise != 'undefined'){
@@ -17,10 +25,8 @@ function ChartService() {
       dates.push("date");
       oneRMs.push(0);
     }
-    var data = {};
-    data.labels = dates;
-    data.series = [oneRMs];
-    return data;
+    this.data.labels = dates;
+    this.data.series = [oneRMs];
   };
 
 
