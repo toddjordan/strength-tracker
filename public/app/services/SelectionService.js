@@ -10,11 +10,12 @@ function SelectionService() {
     this.selectedWorkout = nullWorkout;
   };
   this.selectARandomExercise =  function(exercises) {
-      var exercise;
-      for (i in exercises) {
-        exercise = exercises[i];
-        break;
-      }
+    var exercise;
+    for (i in exercises) {
+      exercise = exercises[i];
+      break;
+    }
+    this.selectedExercise = exercise;
       return exercise;
-    };
+  };
 }

@@ -49,6 +49,25 @@ router['delete']('/:exerciseId', function(req, res, next) {
   });
 });
 
+router.put('/:exerciseId', function(req, res, next) {
+  var id = req.id;
+  console.log("id: " + id);
+  var exercise = req.body.exercise;
+  var name = exercise.name;
+  delete exercise._id;
+  console.log(exercise);
+  db.collection('exercises').findAndModify({_id:ObjectID.createFromHexString(id)}, {}, {$set:exercise}, function(err, result) {
+    if (!err) {
+      console.log(result);
+      res.status(200).json(result);
+    } else {
+      console.log(err);
+      res.status(500).json(result);
+    }
+  });
+  
+});
+
 router.param('exerciseId', function(req, res, next, id) {
   console.log(id);
   req.id = id;

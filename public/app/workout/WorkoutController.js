@@ -56,12 +56,15 @@ exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRep
     sets.splice(index,1);
   };
 
+  //changing set data causes 1rm to change and charts to update accordingly
   sc.onSetChange = function(set, exercise) {
     set.oneRM = oneRepMaxService.calculate(set.weight, set.reps);
     if(set.oneRM > exercise.oneRM) {
       exercise.oneRM = set.oneRM;
     }
     sc.oneRMChartData = chartService.getOneRMChartData();
+    workoutService.updateExercise(selectionService);
   };
+
 
 }]);

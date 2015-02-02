@@ -24,6 +24,7 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope','$modal','
 
   };
 
+  //setup remove button behavior
   sc.removeExercise = function() {
     var modalInstance = modal.open({ 
       templateUrl:"removeWarning.html",

@@ -40,4 +40,13 @@ function WorkoutService(http) {
     });
   };
 
+  this.updateExercise = function(selectionModel) {
+    var exercise = selectionModel.selectedExercise;
+    var id = exercise['_id'];
+    if (typeof id != 'undefined') {
+      http.put('/exercises/'+id, {exercise:exercise}).success(function(data,status,headers,config) {
+      
+      });
+    }
+  };
 }
