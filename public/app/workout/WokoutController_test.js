@@ -15,7 +15,7 @@ describe('In the workout module,', function() {
   };
 
   var workoutService = {
-
+    updateExercise:function(selectionService){}
   };
 
   var selectionService = {
