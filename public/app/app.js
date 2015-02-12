@@ -6,12 +6,20 @@ angular.module('strengthTracker', [
   'strengthTracker.workout',
   'strengthTracker.version',
   'strengthTracker.exerciseSelection',
+  'strengthTracker.login',
   'angular-chartist',
   'ui.bootstrap'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/workout'});
 }]).
+run(function($rootScope, $location) {
+  $rootScope.$on("$routeChangeStart", function(event, next, current) {
+    if ($rootScope.user !== null && next.templateUrl !== "/login/login.html") {
+      $location.path("/login/login.html") ;
+    }
+  });
+}).
   factory('WorkoutService',  function($http){
     var workoutService = new WorkoutService($http);
     return workoutService;
@@ -24,6 +32,12 @@ factory('ChartService', function() {
 }).
 factory('SelectionService', function() {
   return new SelectionService();
+}).
+factory('LoginService', function($http) {
+  return new LoginService($http);
+}).
+factory('UserProfileService', function() {
+  return new UserProfileService();
 });
 
 
