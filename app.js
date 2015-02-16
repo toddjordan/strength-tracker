@@ -7,13 +7,14 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var exercises = require('./routes/exercises');
 var login = require('./routes/login');
 
 var app = express();
+
+
 
 
 
@@ -33,22 +34,25 @@ app.use(session({
   resave:false,
   saveUninitialized:false
 }));
-
-
-
-app.use('/users', users);
 app.use('/exercises', exercises);
-app.use('/login', login);
 app.use('/', routes);
-
-
-app.use(passport.initialize);
-app.use(passport.session);
 
 var user = {
   name:"Todd Jordan",
   id: "todd.jordan"
 };
+
+app.post('/login', function (req, res, next) {
+    passport.authenticate('local', function(err, loginuser, info) {
+      console.log('local login');
+      return res.json(user);
+    })(req, res, next);
+});
+
+app.use(passport.initialize);
+app.use(passport.session);
+
+
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
@@ -57,7 +61,6 @@ passport.use(new LocalStrategy(
     done(null, user);
   }
 ));
-
 
 passport.serializeUser(function(user, done) {
   console.log("serializing user");
