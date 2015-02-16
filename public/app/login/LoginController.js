@@ -9,7 +9,15 @@ exerciseApp.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-exerciseApp.controller('LoginController', ['$scope', 'LoginService', function(sc, loginService) {
-  
+exerciseApp.controller('LoginController', ['$scope', 'LoginService', '$location', function(sc, loginService, location) {
+  var onSuccess = function(data) {
+    location.url('/');
+  };
+  var onFailure = function(data) {
+    //display login failed message
+  };
+  sc.loginClicked = function() {
+    loginService.login(sc.username, sc.password, onSuccess, onFailure);
+  };
 }]);
 

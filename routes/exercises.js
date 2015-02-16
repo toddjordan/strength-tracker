@@ -2,15 +2,23 @@ var express = require('express');
 var router = express.Router();
 var db = require('mongoskin').db('mongodb://localhost:27017/strength-tracker');
 var ObjectID = require('mongodb').ObjectID;
+var auth = function(req, res, next){ 
+  if (!req.isAuthenticated()) 
+    res.sendStatus(401); 
+  else next(); 
+};
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', auth, function(req, res, next) {
+  console.log("user is %s", req.user);
   db.collection('exercises').find().toArray(function(err, result) {
+    console.log("got exercises");
     if (err) throw err;
     var exerciseResults = {};
     for (var i=0;i<result.length;i++) {
       exerciseResults[result[i].name] = result[i];
     }
+    console.log("returning results");
     res.status(200).json({exercises:exerciseResults});
   });
 

@@ -2,7 +2,7 @@
 
 var exerciseSelection = angular.module('strengthTracker.exerciseSelection',[]);
 
-exerciseSelection.controller('ExerciseSelectionController', ['$scope','$modal','WorkoutService','ChartService', 'SelectionService', function(sc, modal, workoutService, chartService, selectionModel) {
+exerciseSelection.controller('ExerciseSelectionController', ['$scope','$modal','WorkoutService','ChartService', 'SelectionService', 'UserProfileService', function(sc, modal, workoutService, chartService, selectionModel, userProfileService) {
   //seed workout data on load
   workoutService.fetchData(function() {
     sc.items = workoutService.exercises;

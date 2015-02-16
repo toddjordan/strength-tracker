@@ -10,17 +10,24 @@ angular.module('strengthTracker', [
   'angular-chartist',
   'ui.bootstrap'
 ]).
-config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider.otherwise({redirectTo: '/workout'});
-}]).
-run(function($rootScope, $location) {
-  $rootScope.$on("$routeChangeStart", function(event, next, current) {
-    if ($rootScope.user !== null && next.templateUrl !== "/login/login.html") {
-      $location.path("/login/login.html") ;
-    }
+  $httpProvider.interceptors.push(function($q, $location) {
+    return {
+      response: function(response) {
+        //on success
+        return response;
+      },
+      responseError: function(response) {
+        if (response.status == 401) {
+          $location.url('/login');
+        }
+        return $q.reject(response);
+      }
+    };
   });
-}).
-  factory('WorkoutService',  function($http){
+}]).
+factory('WorkoutService',  function($http){
     var workoutService = new WorkoutService($http);
     return workoutService;
   }).
