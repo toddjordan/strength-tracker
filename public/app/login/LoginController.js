@@ -9,8 +9,9 @@ exerciseApp.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-exerciseApp.controller('LoginController', ['$scope', 'LoginService', '$location', function(sc, loginService, location) {
+exerciseApp.controller('LoginController', ['$scope', '$rootScope', 'LoginService', '$location', function(sc, $rootScope, loginService, location) {
   var onSuccess = function(data) {
+    $rootScope.$emit('loginSuccessEvent', data);
     location.url('/');
   };
   var onFailure = function(data) {

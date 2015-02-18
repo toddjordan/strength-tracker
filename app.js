@@ -9,14 +9,9 @@ var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var exercises = require('./routes/exercises');
-var login = require('./routes/login');
+
 
 var app = express();
-
-
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,26 +27,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret:"keyboard cat",
   resave:false,
-  saveUninitialized:false
+  saveUninitialized:false,
+  cookie: {
+    maxAge: 60000
+  }
 }));
-app.use('/exercises', exercises);
-app.use('/', routes);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 var user = {
   name:"Todd Jordan",
   id: "todd.jordan"
 };
-
 app.post('/login', function (req, res, next) {
     passport.authenticate('local', function(err, loginuser, info) {
       console.log('local login');
-      return res.json(user);
+      req.logIn(user, function(err) {
+              return res.json(user);
+      });
+
     })(req, res, next);
 });
-
-app.use(passport.initialize);
-app.use(passport.session);
-
 
 
 passport.use(new LocalStrategy(
@@ -62,18 +59,19 @@ passport.use(new LocalStrategy(
   }
 ));
 
-passport.serializeUser(function(user, done) {
+var exercises = require('./routes/exercises')(passport);
+app.use('/exercises', exercises);
+
+passport.serializeUser(function(loggedInUser, done) {
   console.log("serializing user");
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
   //hardcoding user for new.  Otherwise this would be a lookup.
-  console.log("Deserializing user");
-  done(err, user);
+  console.log("deserializing user");
+  done(null, user);
 });
-
-
 
 
 // catch 404 and forward to error handler
