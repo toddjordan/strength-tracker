@@ -4,21 +4,26 @@ var router = express.Router();
 var db = require('mongoskin').db('mongodb://localhost:27017/strength-tracker');
 var ObjectID = require('mongodb').ObjectID;
 
+var auth = function(req, res, next) {
+    console.log("call to exercises, user: %s", req.user);
+    console.log("typeof req.user is %s", typeof req.user);
+    if (!req.isAuthenticated() || typeof req.user == 'undefined') {
+      console.log("returning unauthorized");
+      res.status(401).json({message:"must log in"});
+    } else {
+      console.log("jumping to next");
+      next();
+    }  
+};
 
 module.exports = function(passport) {
 
   /* GET home page. */
-  router.get('/',function(req,res,next) {
-    console.log(req.user);
-    if (!req.isAuthenticated()) {
-      res.status(401);
-    } else {
-      next();
-    }
-  },
+  router.get('/', auth,
              function(req, res, next) {
-//               console.log("user is %j", req.user);
-               db.collection('exercises').find().toArray(function(err, result) {
+               console.log("Logged in user is: %j", req.user);
+               var userid = req.user.id;
+               db.collection('exercises').find({userid:userid}).toArray(function(err, result) {
                  console.log("got exercises");
                  if (err) throw err;
                  var exerciseResults = {};
@@ -31,13 +36,16 @@ module.exports = function(passport) {
 
              });
 
-  router.post('/', function(req, res, next) {
+  router.post('/', auth, function(req, res, next) {
+    console.log("Logged in user is: %j", req.user);
+    var userid = req.user.id;
     var exercise = req.body.exercise;
+    exercise.userid = userid;
     var exerciseName = exercise.name;
     db.collection('exercises').insert(exercise, function(err, result) {
       if (err) throw err;
     });
-    db.collection('exercises').findOne({name:exerciseName}, function(err, result) {
+    db.collection('exercises').findOne({name:exerciseName,userid:userid}, function(err, result) {
       res.status(201).json(result);
     });
 

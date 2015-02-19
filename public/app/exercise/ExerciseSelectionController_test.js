@@ -20,7 +20,10 @@ describe('In the exercise selection module,', function() {
       then:function(doFun) {
       }
     }
-           
+  };
+
+  var userProfileService = {
+
   };
 
   var modal = {
@@ -41,7 +44,7 @@ describe('In the exercise selection module,', function() {
   beforeEach(inject(function($rootScope, $controller, $modal) {
     scope = $rootScope.$new();
     exerciseSelectionController = function() {
-      return $controller('ExerciseSelectionController', {'$scope':scope, '$modal':modal, 'WorkoutService':workoutService, 'ChartService':chartService, 'SelectionService':selectionService});
+      return $controller('ExerciseSelectionController', {'$scope':scope, '$rootScope': $rootScope, '$modal':modal, 'WorkoutService':workoutService, 'ChartService':chartService, 'SelectionService':selectionService, 'UserProfileService':userProfileService});
     };
     scope.vm = exerciseSelectionController;
   }));
