@@ -22,9 +22,7 @@ describe('In the exercise selection module,', function() {
     }
   };
 
-  var userProfileService = {
-
-  };
+  var userProfileService = {};
 
   var modal = {
     open:function(props){}

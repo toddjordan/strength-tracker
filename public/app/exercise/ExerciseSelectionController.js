@@ -3,17 +3,16 @@
 var exerciseSelection = angular.module('strengthTracker.exerciseSelection',[]);
 
 exerciseSelection.controller('ExerciseSelectionController', ['$scope', '$rootScope', '$modal','WorkoutService','ChartService', 'SelectionService', 'UserProfileService', function(sc, $rootScope, modal, workoutService, chartService, selectionModel, userProfileService) {
-  //seed workout data on load
-  workoutService.fetchData(function() {
+  var setExercises = function() {
     sc.items = workoutService.exercises;
     sc.selectedItem = selectionModel.selectedExercise;
-  }, selectionModel);
+  };
+
+  //seed workout data on initial load
+  workoutService.fetchData(setExercises, selectionModel);
 
   $rootScope.$on('loginSuccessEvent', function(event, args) {
-    workoutService.fetchData(function() {
-      sc.items = workoutService.exercises;
-      sc.selectedItem = selectionModel.selectedExercise;
-    }, selectionModel);
+    workoutService.fetchData(setExercises, selectionModel);
   });
 
   //setup add button behavior
@@ -28,7 +27,6 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope', '$rootSco
         sc.selectedItem = selectionModel.selectedExercise;
       });
     });
-
   };
 
   //setup remove button behavior
