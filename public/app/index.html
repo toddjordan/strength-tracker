@@ -74,12 +74,13 @@
                     ng-click="removeExercise()"><span class="glyphicon glyphicon-minus-sign"></span></button>
           </div>          
         </form>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right"
+            ng-controller="UserOptionsController" ng-show="isLoggedIn">
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-               role="button" aria-expanded="false">Todd Jordan<span class="caret"/></a>
+            <a href="" class="dropdown-toggle" data-toggle="dropdown"
+               role="button" aria-expanded="false">{{loggedInUser.name}}<span class="caret"/></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Logout</a></li>
+              <li ng-repeat="choice in items"><a href="">{{choice}}</a></li>
             </ul>
           </li>
         </ul>
@@ -117,6 +118,7 @@
   <script src="services/LoginService.js"></script>
   <script src="services/UserProfileService.js"></script>
   <script src="exercise/ExerciseSelectionController.js"></script>
+  <script src="user/UserOptionsController.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>

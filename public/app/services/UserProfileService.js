@@ -1,6 +1,6 @@
 function UserProfileService() {
 
-  var nullUser = {};
+  var nullUser = {name:''};
   this.loggedInUser = nullUser;
 
   this.clearUser = function() {
@@ -9,5 +9,9 @@ function UserProfileService() {
 
   this.isValidUser = function() {
     return this.loggedInUser !== nullUser;
+  };
+
+  this.getName = function() {
+    return this.loggedInUser.name;
   };
 }

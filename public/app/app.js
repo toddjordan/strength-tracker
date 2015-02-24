@@ -6,6 +6,7 @@ angular.module('strengthTracker', [
   'strengthTracker.workout',
   'strengthTracker.version',
   'strengthTracker.exerciseSelection',
+  'strengthTracker.userOptions',
   'strengthTracker.login',
   'angular-chartist',
   'ui.bootstrap'
