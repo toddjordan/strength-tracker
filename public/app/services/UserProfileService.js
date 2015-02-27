@@ -1,17 +1,26 @@
 function UserProfileService() {
 
   var nullUser = {name:''};
-  this.loggedInUser = nullUser;
+  var loggedInUser = nullUser;
 
   this.clearUser = function() {
-    this.loggedInUser = nullUser;
+    loggedInUser = nullUser;
   };
 
   this.isValidUser = function() {
-    return this.loggedInUser !== nullUser;
+    return loggedInUser !== nullUser;
   };
 
   this.getName = function() {
-    return this.loggedInUser.name;
+    return loggedInUser.name;
   };
+
+  this.setLoggedInUser = function(user) {
+    loggedInUser = user;
+  };
+
+  this.getLoggedInUser = function() {
+    return loggedInUser;
+  };
+
 }
