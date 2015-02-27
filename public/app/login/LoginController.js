@@ -11,6 +11,7 @@ exerciseApp.config(['$routeProvider', function($routeProvider) {
 
 exerciseApp.controller('LoginController', ['$scope', '$rootScope', 'LoginService', '$location', function(sc, $rootScope, loginService, location) {
   var onSuccess = function(data) {
+    $rootScope.loggedInUser = data;
     $rootScope.$emit('loginSuccessEvent', data);
     location.url('/');
   };

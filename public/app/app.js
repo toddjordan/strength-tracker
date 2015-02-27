@@ -28,6 +28,13 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
     };
   });
 }]).
+run(function($rootScope, $location) {
+  $rootScope.$on("$routeChangeStart", function(event, next, current) {
+    if (typeof $rootScope.loggedInUser == 'undefined' && next.templateUrl != "login/login.html") {
+      $location.path("/login");        
+    }
+  });
+}).
 factory('WorkoutService',  function($http){
     var workoutService = new WorkoutService($http);
     return workoutService;
