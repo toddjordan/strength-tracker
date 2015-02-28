@@ -19,7 +19,11 @@ exerciseApp.controller('LoginController', ['$scope', '$rootScope', 'LoginService
     //display login failed message
   };
   sc.loginClicked = function() {
+
     loginService.login(sc.username, sc.password, onSuccess, onFailure);
+  };
+  sc.signup = function() {
+    location.url('/signup');
   };
 }]);
 

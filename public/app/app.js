@@ -8,6 +8,7 @@ angular.module('strengthTracker', [
   'strengthTracker.exerciseSelection',
   'strengthTracker.userOptions',
   'strengthTracker.login',
+  'strengthTracker.signup',
   'angular-chartist',
   'ui.bootstrap'
 ]).
@@ -30,9 +31,10 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
 }]).
 run(function($rootScope, $location) {
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
-    if (typeof $rootScope.loggedInUser == 'undefined' && next.templateUrl != "login/login.html") {
+    if (typeof $rootScope.loggedInUser == 'undefined' && next.templateUrl != "login/login.html" && next.templateUrl != "signup/signup.html") {
+      console.log("redirect to login");
       $location.path("/login");        
-    }
+    } 
   });
 }).
 factory('WorkoutService',  function($http){
