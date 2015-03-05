@@ -10,7 +10,9 @@ module.exports = function(config){
       'public/app/components/**/*.js',
       'public/app/workout/**/*.js',
       'public/app/services/**/*.js',
-      'public/app/exercise/**/*.js'
+      'public/app/exercise/**/*.js',
+      'public/app/login/**/*.js',
+      'public/app/signup/**/*.js'
     ],
 
     autoWatch : true,
@@ -20,10 +22,10 @@ module.exports = function(config){
     browsers : ['Chrome'],
 
     plugins : [
-            'karma-chrome-launcher',
-            'karma-firefox-launcher',
-            'karma-jasmine',
-            'karma-junit-reporter',
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-jasmine',
+      'karma-junit-reporter',
       'karma-html-reporter'
             ],
 

@@ -8,7 +8,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var routes = require('./routes/index');
-var users = require('./routes/users');
+
 
 
 var app = express();
@@ -60,16 +60,18 @@ passport.use(new LocalStrategy(
 ));
 
 var exercises = require('./routes/exercises')(passport);
+var users = require('./routes/users')(passport);
 app.use('/exercises', exercises);
+app.use('/users',users);
 
 passport.serializeUser(function(loggedInUser, done) {
-  console.log("serializing user");
+  console.log("serializing user: %j", loggedInUser);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
   //hardcoding user for new.  Otherwise this would be a lookup.
-  console.log("deserializing user");
+  console.log("deserializing user: %j", user);
   done(null, user);
 });
 
