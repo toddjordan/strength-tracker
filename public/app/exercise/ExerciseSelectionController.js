@@ -17,6 +17,10 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope', '$rootSco
     $scope.isValidUser = true;
   });
 
+  $rootScope.$on('logoutEvent',function(event, args) {
+    $scope.isValidUser = false;
+  });
+
   //setup add button behavior
   $scope.launchAddModal = function() {
     var modalInstance = $modal.open({
