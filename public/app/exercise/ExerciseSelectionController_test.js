@@ -22,7 +22,11 @@ describe('In the exercise selection module,', function() {
     }
   };
 
-  var userProfileService = {};
+  var userProfileService = {
+    isValidUser:function() {
+      return false;
+    }
+  };
 
   var modal = {
     open:function(props){}

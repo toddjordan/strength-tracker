@@ -64,7 +64,7 @@
               <button class="btn btn-default" ng-click="cancelRemove()">Cancel</button>
             </div>
           </script>
-          <div class="form-group">
+          <div class="form-group" ng-show="isValidUser">
             <select class="form-control" ng-options="name for (name,value) in items" ng-model="selectedItem">
             </select>
             <button type="button" class="btn btn-default"
@@ -78,7 +78,7 @@
             ng-controller="UserOptionsController" ng-show="isLoggedIn">
           <li class="dropdown">
             <a href="" class="dropdown-toggle" data-toggle="dropdown"
-               role="button" aria-expanded="false">{{loggedInUser.name}}<span class="caret"/></a>
+               role="button" aria-expanded="false">{{loggedInUser.username}}<span class="caret"/></a>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="choice in items"><a href="">{{choice}}</a></li>
             </ul>

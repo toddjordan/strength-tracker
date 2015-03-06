@@ -2,10 +2,11 @@
 
 var exerciseSelection = angular.module('strengthTracker.exerciseSelection',[]);
 
-exerciseSelection.controller('ExerciseSelectionController', ['$scope', '$rootScope', '$modal','WorkoutService','ChartService', 'SelectionService', 'UserProfileService', function(sc, $rootScope, modal, workoutService, chartService, selectionModel, userProfileService) {
+exerciseSelection.controller('ExerciseSelectionController', ['$scope', '$rootScope', '$modal','WorkoutService','ChartService', 'SelectionService', 'UserProfileService', function($scope, $rootScope, $modal, workoutService, chartService, selectionModel, userProfileService) {
+  $scope.isValidUser = userProfileService.isValidUser();
   var setExercises = function() {
-    sc.items = workoutService.exercises;
-    sc.selectedItem = selectionModel.selectedExercise;
+    $scope.items = workoutService.exercises;
+    $scope.selectedItem = selectionModel.selectedExercise;
   };
 
   //seed workout data on initial load
@@ -13,60 +14,61 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope', '$rootSco
 
   $rootScope.$on('loginSuccessEvent', function(event, args) {
     workoutService.fetchData(setExercises, selectionModel);
+    $scope.isValidUser = true;
   });
 
   //setup add button behavior
-  sc.launchAddModal = function() {
-    var modalInstance = modal.open({
+  $scope.launchAddModal = function() {
+    var modalInstance = $modal.open({
       templateUrl:'myModalContent.html',
       controller: 'AddExerciseController',
       size: 'sm'
     });
     modalInstance.result.then(function(exerciseName) {
       workoutService.createNewExercise(exerciseName, selectionModel, function() {
-        sc.selectedItem = selectionModel.selectedExercise;
+        $scope.selectedItem = selectionModel.selectedExercise;
       });
     });
   };
 
   //setup remove button behavior
-  sc.removeExercise = function() {
-    var modalInstance = modal.open({ 
+  $scope.removeExercise = function() {
+    var modalInstance = $modal.open({ 
       templateUrl:"removeWarning.html",
       controller: 'RemoveExerciseController',
       size : 'sm'
     });
     modalInstance.result.then(function() {
       workoutService.removeExercise(selectionModel, function() {
-        sc.selectedItem = selectionModel.selectedExercise;
+        $scope.selectedItem = selectionModel.selectedExercise;
       });
     });
   };
 
   //watch for when a new item is selected to update the rest of the screen
-  sc.$watch('selectedItem',function(newValue, oldValue){
+  $scope.$watch('selectedItem',function(newValue, oldValue){
     selectionModel.selectedExercise = newValue;
     selectionModel.clearSelectedWorkout();
     chartService.applyNewExercise(newValue);
   });
 }]);
 
-exerciseSelection.controller('AddExerciseController', ['$scope', '$modalInstance', function(sc, modalInstance) {
-  sc.ok = function() {
-    modalInstance.close(sc.exerciseName);
+exerciseSelection.controller('AddExerciseController', ['$scope', '$modalInstance', function($scope, modalInstance) {
+  $scope.ok = function() {
+    modalInstance.close($scope.exerciseName);
   };
 
-  sc.cancel = function() {
+  $scope.cancel = function() {
     modalInstance.dismiss('cancel');
   };
 }]);
 
 exerciseSelection.controller('RemoveExerciseController', ['$scope', '$modalInstance', function(sc, modalInstance) {
-  sc.remove = function() {
+  $scope.remove = function() {
     modalInstance.close();
   };
 
-  sc.cancelRemove = function() {
+  $scope.cancelRemove = function() {
     modalInstance.dismiss('cancel');
   };
 }]);
