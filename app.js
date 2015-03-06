@@ -8,7 +8,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var routes = require('./routes/index');
-
+var db = require('mongoskin').db('mongodb://localhost:27017/strength-tracker');
 
 
 var app = express();
@@ -36,26 +36,34 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-var user = {
-  name:"Todd Jordan",
-  id: "todd.jordan"
-};
 app.post('/login', function (req, res, next) {
-    passport.authenticate('local', function(err, loginuser, info) {
-      console.log('local login');
+    passport.authenticate('local', function(err, user, info) {
+      console.log('local login for: %j', user);
       req.logIn(user, function(err) {
-              return res.json(user);
+        if (err) {
+          console.log("error logging in: %s", err);
+          throw err;
+        }
+        console.log("successful logn: %j", user);
+        return res.json(user);
       });
-
     })(req, res, next);
 });
 
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    //hardcoding user for now
+  function(userid, password, done) {
     console.log("local strategy");
-    done(null, user);
+    console.log('userid: %s, password: %s', userid, password);
+    db.collection('users').findOne({userid:userid, password:password}, function(err, result) {
+      if(err) {
+        console.log("error finding user: %s", err);
+        throw err;
+      }
+      console.log("found user: %j", result);
+      console.log("calling done for %j", result);
+      done(null, result);
+    });
   }
 ));
 
@@ -66,13 +74,20 @@ app.use('/users',users);
 
 passport.serializeUser(function(loggedInUser, done) {
   console.log("serializing user: %j", loggedInUser);
-  done(null, user.id);
+  done(null, loggedInUser.userid);
 });
 
 passport.deserializeUser(function(id, done) {
-  //hardcoding user for new.  Otherwise this would be a lookup.
-  console.log("deserializing user: %j", user);
-  done(null, user);
+  console.log("deserializing user: %s", id);
+  db.collection('users').findOne({userid:id}, function(err, result) {
+    if(err) {
+      console.log("error finding user: %s", err);
+      throw err;
+    }
+    console.log("found user: %j", result);  
+    done(null, result);
+  });
+
 });
 
 // catch 404 and forward to error handler
