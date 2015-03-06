@@ -25,11 +25,10 @@ exerciseApp.controller('WorkoutController', ['$scope', 'WorkoutService', 'OneRep
       //show add set button
       sc.addSetHidden=false;
     }
-    
   };
 
   sc.isWorkoutSelected = function(workout) {
-    return workout == sc.selectionModel.selectedWorkout;
+    return workout === sc.selectionModel.selectedWorkout;
   };
   
   sc.removeWorkout = function(workouts, index) {
