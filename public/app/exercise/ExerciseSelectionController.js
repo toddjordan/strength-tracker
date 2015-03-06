@@ -19,6 +19,7 @@ exerciseSelection.controller('ExerciseSelectionController', ['$scope', '$rootSco
 
   $rootScope.$on('logoutEvent',function(event, args) {
     $scope.isValidUser = false;
+    selectionModel.clearAllWorkouts();
   });
 
   //setup add button behavior
