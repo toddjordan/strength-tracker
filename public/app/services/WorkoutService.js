@@ -1,3 +1,4 @@
+'use strict';
 function WorkoutService(http) {
 
   this.http = http;
@@ -15,9 +16,9 @@ function WorkoutService(http) {
   };
 
   this.createNewExercise = function(exerciseName, selectionModel, success) {
-    newExercise = {};
+    var newExercise = {};
     newExercise.name = exerciseName;
-    newExercise['workouts'] = [];
+    newExercise.workouts = [];
     http.post('/exercises', {exercise:newExercise}).success(function(data, status, headers, config) {
       serviceObj.exercises[exerciseName] = data;
       selectionModel.selectedExercise = data;
@@ -31,7 +32,7 @@ function WorkoutService(http) {
   this.removeExercise = function(selectionModel, success) {
     var exercise = selectionModel.selectedExercise;
     var exerciseName = exercise.name;
-    var id = exercise['_id'];
+    var id = exercise._id;
     http['delete']('/exercises/'+id).success(function(data, status, headers, config) {
       selectionModel.clearSelectedWorkout();
       delete serviceObj.exercises[exerciseName];
@@ -42,8 +43,8 @@ function WorkoutService(http) {
 
   this.updateExercise = function(selectionModel) {
     var exercise = selectionModel.selectedExercise;
-    var id = exercise['_id'];
-    if (typeof id != 'undefined') {
+    var id = exercise._id;
+    if (typeof id !== 'undefined') {
       http.put('/exercises/'+id, {exercise:exercise}).success(function(data,status,headers,config) {
       
       });

@@ -68,7 +68,7 @@ exerciseSelection.controller('AddExerciseController', ['$scope', '$modalInstance
   };
 }]);
 
-exerciseSelection.controller('RemoveExerciseController', ['$scope', '$modalInstance', function(sc, modalInstance) {
+exerciseSelection.controller('RemoveExerciseController', ['$scope', '$modalInstance', function($scope, modalInstance) {
   $scope.remove = function() {
     modalInstance.close();
   };

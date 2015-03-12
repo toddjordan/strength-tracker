@@ -1,4 +1,5 @@
 'use strict';
+/* global WorkoutService, OneRepMaxService, ChartService,  SelectionService, UserProfileService, LoginService  */
 
 // Declare app level module which depends on views, and components
 angular.module('strengthTracker', [
@@ -21,7 +22,7 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
         return response;
       },
       responseError: function(response) {
-        if (response.status == 401) {
+        if (response.status === 401) {
           $location.url('/login');
         }
         return $q.reject(response);
@@ -31,7 +32,7 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
 }]).
 run(function($rootScope, $location) {
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
-    if (typeof $rootScope.loggedInUser == 'undefined' && next.templateUrl != "login/login.html" && next.templateUrl != "signup/signup.html") {
+    if (typeof $rootScope.loggedInUser === 'undefined' && next.templateUrl !== "login/login.html" && next.templateUrl !== "signup/signup.html") {
       console.log("redirect to login");
       $location.path("/login");        
     } 

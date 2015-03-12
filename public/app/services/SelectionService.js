@@ -1,3 +1,5 @@
+'use strict';
+
 function SelectionService() {
   var nullWorkout = {
     date:"Select a Workout"
@@ -14,9 +16,11 @@ function SelectionService() {
   };
   this.selectARandomExercise =  function(exercises) {
     var exercise;
-    for (i in exercises) {
-      exercise = exercises[i];
-      break;
+    for (var i in exercises) {
+      if (exercises.hasOwnProperty(i)) {
+        exercise = exercises[i];
+        break;
+      }
     }
     this.selectedExercise = exercise;
       return exercise;

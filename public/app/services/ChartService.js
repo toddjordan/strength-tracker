@@ -1,3 +1,4 @@
+'use strict';
 
 function ChartService() {
 
@@ -16,7 +17,7 @@ function ChartService() {
   this.updateOneRMChartData = function() {
     var dates = [];
     var oneRMs = [];
-    if (typeof this.exercise != 'undefined'){
+    if (typeof this.exercise !== 'undefined'){
       for (var i=this.exercise.workouts.length-1;i>=0;i--) {
         dates.push(this.exercise.workouts[i].date);
         oneRMs.push(this.exercise.workouts[i].oneRM);

@@ -1,3 +1,5 @@
+'use strict';
+
 function LoginService(http) {
   this.http = http;
 

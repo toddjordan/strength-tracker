@@ -1,3 +1,5 @@
+'use strict';
+
 function OneRepMaxService() {
 
   this.calculate = function(weight, reps) {

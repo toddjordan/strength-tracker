@@ -1,4 +1,5 @@
 'use strict';
+/* global OneRepMaxService */
 
 describe('In the one rep max service,', function() {
   var oneRepMaxService;

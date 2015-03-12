@@ -1,3 +1,5 @@
+'use strict';
+
 function UserProfileService() {
 
   var nullUser = {username:''};
