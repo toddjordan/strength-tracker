@@ -26,10 +26,26 @@ module.exports = function(config){
       'karma-firefox-launcher',
       'karma-jasmine',
       'karma-junit-reporter',
-      'karma-html-reporter'
+      'karma-html-reporter',
+      'karma-coverage'
             ],
 
-    reporters: ['progress', 'html'],
+    reporters: ['progress', 'html', 'coverage'],
+
+    preprocessors: {
+      'public/app/components/**/*.js': ['coverage'],
+      'public/app/workout/**/*.js': ['coverage'],
+      'public/app/services/**/*.js': ['coverage'],
+      'public/app/exercise/**/*.js': ['coverage'],
+      'public/app/login/**/*.js': ['coverage'],
+      'public/app/signup/**/*.js': ['coverage']
+
+    },
+
+    coverageReporter: {
+      type:'text-summary',
+      dir: 'coverage/'
+    },
 
     junitReporter : {
       outputFile: 'test_out/unit.xml',
