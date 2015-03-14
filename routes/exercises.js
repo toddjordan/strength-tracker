@@ -24,9 +24,9 @@ module.exports = function(passport) {
   router.get('/', auth,
              function(req, res, next) {
                console.log("Logged in user is: %j", req.user);
-               var userid = req.user.id;
+               var userid = req.user.userid;
                db.collection('exercises').find({userid:userid}).toArray(function(err, result) {
-                 console.log("got exercises");
+                 console.log("got exercises for %s", userid);
                  if (err) {throw err;}
                  var exerciseResults = {};
                  for (var i=0;i<result.length;i++) {

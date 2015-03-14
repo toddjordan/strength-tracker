@@ -29,8 +29,8 @@ describe('Strength Tracker', function() {
 
   describe('login', function() {
     it('should redirect to workout screen on a successful login', function() {
-      element(by.model('username')).sendKeys('test.user');
-      element(by.model('password')).sendKeys('testuser');
+      element(by.model('username')).sendKeys(testUser.userid);
+      element(by.model('password')).sendKeys(testUser.password);
       element(by.buttonText('Login')).click();
       expect(browser.getLocationAbsUrl()).toMatch('/workout');
     });
@@ -40,20 +40,16 @@ describe('Strength Tracker', function() {
   describe('exercise page', function() {
 
     it('should list existing workouts', function() {
-      expect(element.all(by.css('#workoutTable')).count()).toBe(1);
+      expect(element.all(by.css('#workoutTable tbody tr')).count()).toBe(1);
     });
   });
 
 
   describe('selecting a workout', function() {
 
-    beforeEach(function() {
-      //select workout
-      element.all(by.css('#workoutTable tr')).first().click();
-    });
-
 
     it('should display existing sets', function() {
+      element.all(by.css('#workoutTable tbody tr')).first().click();
       expect(element.all(by.css('#setList li')).count()).toBe(2);
     });
 
