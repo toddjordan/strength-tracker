@@ -10,12 +10,16 @@
     "gulp": "^3.8.11",
     "gulp-jshint": "^1.9.2",
     "http-server": "^0.6.1",
+    "jasmine": "^2.2.1",
+    "jasmine-core": "^2.2.0",
     "jshint-stylish": "^1.0.1",
     "karma": "^0.12.31",
     "karma-coverage": "^0.2.7",
     "karma-html-reporter": "^0.2.4",
+    "karma-jasmine": "^0.3.5",
     "karma-junit-reporter": "^0.2.2",
-    "protractor": "^1.1.1",
+    "mongodb": "^1.4.34",
+    "protractor": "^1.8.0",
     "shelljs": "^0.2.6"
   },
   "scripts": {
@@ -39,16 +43,6 @@
     "jade": "~1.9.1",
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0"
-  },
-  "jshintConfig": {
-    "boss": true,
-    "node": true,
-    "strict": true,
-    "newcap": false,
-    "undef": true,
-    "unused": true,
-    "onecase": true,
-    "lastsemic": true
   },
   "files": [
     "public",

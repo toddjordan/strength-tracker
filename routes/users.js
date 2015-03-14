@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 var db = require('mongoskin').db('mongodb://localhost:27017/strength-tracker');

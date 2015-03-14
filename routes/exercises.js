@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 
 var router = express.Router();
@@ -7,7 +9,7 @@ var ObjectID = require('mongodb').ObjectID;
 var auth = function(req, res, next) {
     console.log("call to exercises, user: %s", req.user);
     console.log("typeof req.user is %s", typeof req.user);
-    if (!req.isAuthenticated() || typeof req.user == 'undefined') {
+    if (!req.isAuthenticated() || typeof req.user === 'undefined') {
       console.log("returning unauthorized");
       res.status(401).json({message:"must log in"});
     } else {
@@ -25,7 +27,7 @@ module.exports = function(passport) {
                var userid = req.user.id;
                db.collection('exercises').find({userid:userid}).toArray(function(err, result) {
                  console.log("got exercises");
-                 if (err) throw err;
+                 if (err) {throw err;}
                  var exerciseResults = {};
                  for (var i=0;i<result.length;i++) {
                    exerciseResults[result[i].name] = result[i];
@@ -43,7 +45,7 @@ module.exports = function(passport) {
     exercise.userid = userid;
     var exerciseName = exercise.name;
     db.collection('exercises').insert(exercise, function(err, result) {
-      if (err) throw err;
+      if (err) {throw err;}
     });
     db.collection('exercises').findOne({name:exerciseName,userid:userid}, function(err, result) {
       res.status(201).json(result);
