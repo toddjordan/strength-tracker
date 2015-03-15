@@ -52,7 +52,7 @@ describe('In the Login module,', function() {
       spyOn(loginService, 'login');
       loginController();
       scope.loginClicked();
-      loginService.login.argsForCall[0][2]({userid:"todd.jordan", username:"Todd Jordan"});
+      loginService.login.calls.argsFor(0)[2]({userid:"todd.jordan", username:"Todd Jordan"});
       expect(location.url).toHaveBeenCalled();
 
     });

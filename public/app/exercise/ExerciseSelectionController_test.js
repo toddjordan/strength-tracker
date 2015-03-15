@@ -32,7 +32,7 @@ describe('In the exercise selection module,', function() {
     open:function(props){}
   };
 
-  var exerciseSelectionController, scope;
+  var exerciseSelectionController, $scope;
 
   beforeEach(function() {
     module('strengthTracker.exerciseSelection');
@@ -44,11 +44,11 @@ describe('In the exercise selection module,', function() {
   });
 
   beforeEach(inject(function($rootScope, $controller, $modal) {
-    scope = $rootScope.$new();
+    $scope = $rootScope.$new();
     exerciseSelectionController = function() {
-      return $controller('ExerciseSelectionController', {'$scope':scope, '$rootScope': $rootScope, '$modal':modal, 'WorkoutService':workoutService, 'ChartService':chartService, 'SelectionService':selectionService, 'UserProfileService':userProfileService});
+      return $controller('ExerciseSelectionController', {'$scope':$scope, '$rootScope': $rootScope, '$modal':modal, 'WorkoutService':workoutService, 'ChartService':chartService, 'SelectionService':selectionService, 'UserProfileService':userProfileService});
     };
-    scope.vm = exerciseSelectionController;
+    $scope.vm = exerciseSelectionController;
   }));
 
   describe('controller execution', function() {
@@ -60,9 +60,9 @@ describe('In the exercise selection module,', function() {
     });
 
     it('should watch for item selection', function() {
-      spyOn(scope, '$watch');
+      spyOn($scope, '$watch');
       exerciseSelectionController();
-      expect(scope.$watch).toHaveBeenCalled();
+      expect($scope.$watch).toHaveBeenCalled();
     });
 
   });
@@ -76,23 +76,23 @@ describe('In the exercise selection module,', function() {
       workoutService.exercises = exercises;
       spyOn(workoutService, 'fetchData');
       exerciseSelectionController();
-      workoutService.fetchData.argsForCall[0][0]();
+      workoutService.fetchData.calls.argsFor(0)[0]();
     });
 
     it('should set list of exercises', function() {
       //capture fetch data call and run it
-      expect(scope.items).toBe(exercises);
+      expect($scope.items).toBe(exercises);
     });
     it('should set selected exercise', function() {
-      expect(scope.selectedItem).toBe(selectedExercise);
+      expect($scope.selectedItem).toBe(selectedExercise);
     });
   });
 
   describe('clicking to add an exercese', function() {
     it ('should open modal', function() {
-      spyOn(modal, 'open').andReturn(modalInstance);
+      spyOn(modal, 'open').and.returnValue(modalInstance);
       exerciseSelectionController();
-      scope.launchAddModal();
+      $scope.launchAddModal();
       expect(modal.open).toHaveBeenCalled();
     });
 
@@ -101,9 +101,9 @@ describe('In the exercise selection module,', function() {
   describe('submitting the new exercise dialog', function(){
     it ('should request creation of the new exercise', function() {
       spyOn(workoutService, 'createExercise');
-      spyOn(modal, 'open').andReturn(modalInstance);
+      spyOn(modal, 'open').and.returnValue(modalInstance);
       exerciseSelectionController();
-      scope.launchAddModal();
+      $scope.launchAddModal();
     });
   });
 
@@ -117,8 +117,8 @@ describe('In the exercise selection module,', function() {
       spyOn(selectionService, 'clearSelectedWorkout');
       spyOn(chartService, 'applyNewExercise');
       exerciseSelectionController();
-      scope.selectedItem = exercise;
-      scope.$digest();
+      $scope.selectedItem = exercise;
+      $scope.$digest();
     });
     it ('should set the selected exercise on the model', function() {
       expect(selectionService.selectedExercise).toBe(exercise);

@@ -12,6 +12,12 @@ function LoginService(http) {
 
   };
 
+  this.logout = function(success) {
+    this.http.post('/logout').success(function() {
+      success();
+    });
+  };
+
   this.signup = function(userid, username, password, success, fail) {
     this.http.post('/users', {userid:userid, username:username, password:password}).success(function(data, status, headers, config) {
       success(data);

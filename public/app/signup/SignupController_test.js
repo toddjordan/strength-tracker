@@ -54,7 +54,7 @@ describe('In the Signup module,', function() {
       spyOn(loginService, 'signup');
       signupController();
       scope.signupClicked();
-      loginService.signup.argsForCall[0][3]({userid:"todd.jordan", username:"Todd Jordan"});
+      loginService.signup.calls.argsFor(0)[3]({userid:"todd.jordan", username:"Todd Jordan"});
       expect(location.url).toHaveBeenCalled();
     });
   });

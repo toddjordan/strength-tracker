@@ -2,7 +2,7 @@
 
 var exerciseApp = angular.module('strengthTracker.userOptions', []);
 
-exerciseApp.controller('UserOptionsController', ['$rootScope','$scope', '$location', 'UserProfileService', function($rootScope, $scope, $location, userProfileService) {
+exerciseApp.controller('UserOptionsController', ['$rootScope','$scope', '$location', 'UserProfileService', 'LoginService', function($rootScope, $scope, $location, userProfileService, loginService) {
   $scope.items = [{text:'Logout',key:"logout"}];
   $scope.loggedInUser = userProfileService.getLoggedInUser();
   $scope.isLoggedIn = userProfileService.isValidUser();
@@ -15,9 +15,11 @@ exerciseApp.controller('UserOptionsController', ['$rootScope','$scope', '$locati
     logout:function() {
       userProfileService.clearUser();
       $scope.loggedInUser = userProfileService.getLoggedInUser();
-      $scope.isLoggedIn = false;
-      $location.url('/login');
-      $rootScope.$emit('logoutEvent');
+      loginService.logout(function() {
+        $scope.isLoggedIn = false;
+        $location.url('/login');
+        $rootScope.$emit('logoutEvent');
+      });
     }
   };
   $scope.handleSelected = function(key) {

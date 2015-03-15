@@ -9,21 +9,26 @@ exerciseApp.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-exerciseApp.controller('LoginController', ['$scope', '$rootScope', 'LoginService', '$location', function(sc, $rootScope, loginService, location) {
+exerciseApp.controller('LoginController', ['$scope', '$rootScope', 'LoginService', '$location', function($scope, $rootScope, loginService, location) {
+  var failedLoginAttemptMessage = { type: 'danger', msg: 'Login failed due to an incorrect username or password.' };
   var onSuccess = function(data) {
     $rootScope.loggedInUser = data;
+    $scope.alerts.splice(0, $scope.alerts.length);
     $rootScope.$emit('loginSuccessEvent', data);
     location.url('/');
   };
   var onFailure = function(data) {
-    //display login failed message
+    $scope.alerts.push(failedLoginAttemptMessage);
   };
-  sc.loginClicked = function() {
-
-    loginService.login(sc.username, sc.password, onSuccess, onFailure);
+  $scope.alerts = [];
+  $scope.loginClicked = function() {
+    loginService.login($scope.username, $scope.password, onSuccess, onFailure);
   };
-  sc.signup = function() {
+  $scope.signup = function() {
     location.url('/signup');
+  };
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
   };
 }]);
 

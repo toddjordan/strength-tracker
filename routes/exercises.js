@@ -40,7 +40,7 @@ module.exports = function(passport) {
 
   router.post('/', auth, function(req, res, next) {
     console.log("Logged in user is: %j", req.user);
-    var userid = req.user.id;
+    var userid = req.user.userid;
     var exercise = req.body.exercise;
     exercise.userid = userid;
     var exerciseName = exercise.name;

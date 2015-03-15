@@ -37,8 +37,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.post('/login', function (req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-      console.log('local login for: %j', user);
+  passport.authenticate('local', function(err, user, info) {
+    console.log('local login for: %j with %j', user, info);
+    if (user) {
       req.logIn(user, function(err) {
         if (err) {
           console.log("error logging in: %s", err);
@@ -47,7 +48,18 @@ app.post('/login', function (req, res, next) {
         console.log("successful logn: %j", user);
         return res.json(user);
       });
-    })(req, res, next);
+
+    } else {
+      res.sendStatus(401);
+    }
+    
+  })(req, res, next);
+});
+
+app.post('/logout', function(req,res, next) {
+  console.log('logging out');
+  req.logout();
+  return res.sendStatus(204);
 });
 
 
@@ -61,8 +73,13 @@ passport.use(new LocalStrategy(
         throw err;
       }
       console.log("found user: %j", result);
-      console.log("calling done for %j", result);
-      done(null, result);
+      if (result) {
+        console.log("calling done for %j", result);
+        done(null, result);
+      } else {
+        console.log('authentication failed, returning false');
+        done(null, false);
+      }
     });
   }
 ));
@@ -74,16 +91,12 @@ app.use('/users',users);
 
 passport.serializeUser(function(loggedInUser, done) {
   console.log("serializing user: %j", loggedInUser);
-  done(null, loggedInUser.userid);
+  done(null, loggedInUser.userid);  
 });
 
 passport.deserializeUser(function(id, done) {
   console.log("deserializing user: %s", id);
   db.collection('users').findOne({userid:id}, function(err, result) {
-    if(err) {
-      console.log("error finding user: %s", err);
-      throw err;
-    }
     console.log("found user: %j", result);  
     done(null, result);
   });
