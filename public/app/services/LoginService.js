@@ -4,7 +4,7 @@ function LoginService(http) {
   this.http = http;
 
   this.login = function(username, password, success, fail) {
-    this.http.post('/login', {username:username, password:password}).success(function(data, status, headers, config) {
+    this.http.post('/auth/login', {username:username, password:password}).success(function(data, status, headers, config) {
       success(data);
     }).error(function(data, status, headers, config) {
       fail(data);
@@ -13,7 +13,7 @@ function LoginService(http) {
   };
 
   this.logout = function(success) {
-    this.http.post('/logout').success(function() {
+    this.http.post('/auth/logout').success(function() {
       success();
     });
   };
