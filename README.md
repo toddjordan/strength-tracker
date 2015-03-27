@@ -1,7 +1,8 @@
 # strength-tracker
 
-A web application, written in JavaScript using AngularJS, that tracks weight lifting and strength progress.
+A web application, written in JavaScript using AngularJS, that tracks weight lifting and strength progress.  My headfirst jump into MEAN stack programming.  Essentially strength tracker will track your one rep max over time, so you can see whether working out is doing anything for you.  You simply log you workout reps and weights and it will give you a rough caclulation on the amount of weight that you can do one rep for.  A chart will tell you what that metric is doing over time.
 
+![alt text](https://presentationtier.files.wordpress.com/2015/03/strengthtrackerfinal.png?w=700&h=413 "awesome sauce")
 
 ## Getting Started
 
@@ -49,38 +50,54 @@ npm start
 Now browse to the app at `http://localhost:8000/app/index.html`.
 
 
-
 ## Directory Layout
 
 ```
-app/                    --> all of the source files for the application
-  app.css               --> default stylesheet
-  components/           --> all app specific modules
-    version/              --> version related components
+routes
+    authentication.js            --> routes for handling login
+    exercises.js                 --> routes for exercise-related CRUDopterations
+    user.js                      --> routes for user registration and preferences
+public/app/                      --> all of the source files for the application
+  app.css                        --> default stylesheet
+  components/                    --> all app specific modules
+    version/                     --> version related components
       version.js                 --> version module declaration and basic "version" value service
       version_test.js            --> "version" value service tests
       version-directive.js       --> custom directive that returns the current app version
       version-directive_test.js  --> version directive tests
       interpolate-filter.js      --> custom interpolation filter
       interpolate-filter_test.js --> interpolate filter tests
-  exercise/      --> logic for listing selecting exercises
+  exercise/                      --> logic for listing selecting exercises
     ExerciseSelectionController.js
-  workout/                --> the main workout view template and logic
-    workout.html            --> the partial template
-    WorkoutController.js              --> the controller logic
-    WorkoutController_test.js         --> tests of the controller
-  services/                --> the view2 view template and logic
-    WorkoutService.js            --> Fetches/Provides the workout model
-    WorkoutService_test.js        -->tests for the WorkoutService
-    OneRepMaxService.js              --> Calculates 1RM
-    ChartService.js                  --> Configures a chart-friendly object from given workout data
-  app.js                --> main application module
-  index.html            --> app layout file (the main html template file of the app)
-  index-async.html      --> just like index.html, but loads js files asynchronously
-karma.conf.js         --> config file for running unit tests with Karma
-e2e-tests/            --> end-to-end tests
-  protractor-conf.js    --> Protractor config file
-  scenarios.js          --> end-to-end scenarios to be run by Protractor
+  login/
+    LoginController.js           -->Handles login commands
+    LoginController_test.js
+    login.html
+  user/
+    UserOptionsController.js     -->Handles actions from the user profile menu (logout)
+  signup/
+    SignupController.js          -->Handles actions from the user registration page
+    SignupController_test.js      
+    signup.html
+  workout/                        --> the main workout view template and logic
+    workout.html                  
+    WorkoutController.js           
+    WorkoutController_test.js         
+  services/                
+    WorkoutService.js           
+    WorkoutService_test.js        
+    OneRepMaxService.js           --> Calculates 1RM
+    OneRepMaxService_test.js
+    SelectionService.js           --> Keeps workout selection state
+    UserProfileService.js 
+    ChartService.js               --> Configures a chart-friendly object from given workout data
+  app.js                          --> main application module
+  index.html                      --> app layout file (the main html template file of the app)
+  index-async.html                --> just like index.html, but loads js files asynchronously
+karma.conf.js                     --> config file for running unit tests with Karma
+e2e-tests/                        --> end-to-end tests
+  protractor-conf.js              --> Protractor config file
+  scenarios.js                    --> end-to-end scenarios to be run by Protractor
 ```
 
 ## Testing
@@ -115,6 +132,11 @@ predefined script to do this:
 npm run test-single-run
 ```
 
+You can also run the unit tests in gulp as follows
+
+```
+gulp watch
+```
 
 ### End to end testing
 
@@ -175,71 +197,6 @@ bower update
 
 This will find the latest versions that match the version ranges specified in the `bower.json` file.
 
-
-## Loading Angular Asynchronously
-
-The angular-seed project supports loading the framework and application scripts asynchronously.  The
-special `index-async.html` is designed to support this style of loading.  For it to work you must
-inject a piece of Angular JavaScript into the HTML page.  The project has a predefined script to help
-do this.
-
-```
-npm run update-index-async
-```
-
-This will copy the contents of the `angular-loader.js` library file into the `index-async.html` page.
-You can run this every time you update the version of Angular that you are using.
-
-
-## Serving the Application Files
-
-While angular is client-side-only technology and it's possible to create angular webapps that
-don't require a backend server at all, we recommend serving the project files using a local
-webserver during development to avoid issues with security restrictions (sandbox) in browsers. The
-sandbox implementation varies between browsers, but quite often prevents things like cookies, xhr,
-etc to function properly when an html page is opened via `file://` scheme instead of `http://`.
-
-
-
-### Running the App in Production
-
-This really depends on how complex your app is and the overall infrastructure of your system, but
-the general rule is that all you need in production are all the files under the `app/` directory.
-Everything else should be omitted.
-
-Angular apps are really just a bunch of static html, css and js files that just need to be hosted
-somewhere they can be accessed by browsers.
-
-If your Angular app is talking to the backend server via xhr or other means, you need to figure
-out what is the best way to host the static files to comply with the same origin policy if
-applicable. Usually this is done by hosting the files by the backend server or through
-reverse-proxying the backend server(s) and webserver(s).
-
-
-## Continuous Integration
-
-### Travis CI
-
-[Travis CI][travis] is a continuous integration service, which can monitor GitHub for new commits
-to your repository and execute scripts such as building the app or running tests. The angular-seed
-project contains a Travis configuration file, `.travis.yml`, which will cause Travis to run your
-tests when you push to GitHub.
-
-You will need to enable the integration between Travis and GitHub. See the Travis website for more
-instruction on how to do this.
-
-### CloudBees
-
-CloudBees have provided a CI/deployment setup:
-
-<a href="https://grandcentral.cloudbees.com/?CB_clickstart=https://raw.github.com/CloudBees-community/angular-js-clickstart/master/clickstart.json">
-<img src="https://d3ko533tu1ozfq.cloudfront.net/clickstart/deployInstantly.png"/></a>
-
-If you run this, you will get a cloned version of this repo to start working on in a private git repo,
-along with a CI service (in Jenkins) hosted that will run unit and end to end tests in both Firefox and Chrome.
-
-
-## Contact
 
 For more information on AngularJS please check out http://angularjs.org/
 
